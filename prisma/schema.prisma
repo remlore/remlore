@@ -1,0 +1,162 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ERole {
+  Admin
+  User
+  Guest
+}
+
+enum EAchievement {
+  LV22
+  OneYear
+  ThreeYear
+  Longly
+}
+
+enum EReaction {
+  Like
+  Dislike
+  Haha
+  Love
+  Sad
+  Angry
+}
+
+model User {
+  userId String @id @default(uuid())
+
+  username String? @unique
+  email    String  @unique
+  hash     String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt() @db.Timestamp()
+
+  role        ERole         @default(Guest)
+  achievement EAchievement?
+
+  verifyId String? @unique
+  verify   Verify? @relation(fields: [verifyId], references: [verifyId])
+
+  profileId String?  @unique
+  profile   Profile? @relation(fields: [profileId], references: [profileId])
+
+  xps       XP[]
+  comments  Comment[]
+  posts     Post[]
+  reactions Reaction[]
+  favorites AnimeTag[]
+}
+
+model Profile {
+  profileId String @id @default(uuid())
+
+  rem_loreUsername String?   @unique
+  displayName      String?
+  photoUrl         String?
+  backgroundUrl    String?
+  story            String?
+  setting          Json      @default("{}")
+  brithday         DateTime? @db.Timestamp()
+
+  user User?
+}
+
+model Verify {
+  verifyId String @id @default(uuid())
+
+  hashRt           String?
+  hashVerify       String?
+  countSentEmails  Int     @default(0)
+  verified         Boolean @default(false)
+  isRemLoreAccount Boolean @default(false)
+
+  user User?
+}
+
+model XP {
+  xpId   String @id @unique
+  userId String
+
+  xp Int @default(0)
+
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [userId])
+}
+
+model Anime {
+  animeId String @id @unique @default(uuid())
+
+  name String
+  slug String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt() @db.Timestamp()
+
+  tags AnimeTag[]
+}
+
+model AnimeTag {
+  animeTagId Int @id @default(autoincrement())
+
+  name        String
+  slug        String  @unique
+  description String?
+
+  users  User[]
+  animes Anime[]
+}
+
+model Comment {
+  commentId String @id @default(uuid())
+  userId    String
+
+  content  String
+  hasReply Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @db.Timestamp()
+
+  replies Comment[] @relation("replies")
+  user    User      @relation(fields: [userId], references: [userId])
+  parent  Comment?  @relation("replies", fields: [commentId], references: [commentId])
+}
+
+model Post {
+  postId String @id @default(uuid())
+  userId String
+
+  slug    String @unique
+  content String
+
+  reactions Reaction[]
+  authorId  User       @relation(fields: [userId], references: [userId])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt() @db.Timestamp()
+}
+
+model Reaction {
+  id     Int    @id @default(autoincrement())
+  postId String
+
+  userId String
+  type   EReaction
+
+  post Post @relation(fields: [postId], references: [postId])
+  user User @relation(fields: [userId], references: [userId])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt() @db.Timestamp()
+}

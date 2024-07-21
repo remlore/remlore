@@ -1,0 +1,39 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "strict": true,
+    "noImplicitAny": true,
+    "strictPropertyInitialization": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@rem.lore/api/anime": ["libs/api/anime/src/index.ts"],
+      "@rem.lore/api/auth": ["libs/api/auth/src/index.ts"],
+      "@rem.lore/api/manga": ["libs/api/manga/src/index.ts"],
+      "@rem.lore/api/prisma": ["libs/api/prisma/src/index.ts"],
+      "@rem.lore/api/scrape": ["libs/api/scrape/src/index.ts"],
+      "@rem.lore/api/shared/utils": ["libs/api/shared/utils/src/index.ts"],
+      "@rem.lore/api/user": ["libs/api/user/src/index.ts"],
+      "@rem.lore/shared/util/fucns": ["libs/shared/util/funcs/src/index.ts"],
+      "@rem.lore/shared/util/types": ["libs/shared/util/types/src/index.ts"],
+      "@rem.lore/web/shared/ui": ["libs/web/shared/components/src/index.ts"],
+      "@rem.lore/web/shared/utils": ["libs/web/shared/utils/src/index.ts"],
+      "@rem.lore/web/shell/feature": ["libs/web/shell/feature/src/index.ts"],
+      "@rem.lore/web/shell/ui/layout": ["libs/web/shell/ui/layout/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

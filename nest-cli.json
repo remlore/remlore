@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "core": {
+      "type": "library",
+      "root": "libs/api/core",
+      "entryFile": "index",
+      "sourceRoot": "libs/api/core/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/api/core/tsconfig.lib.json"
+      }
+    }
+  },
+  "compilerOptions": {
+    "webpack": true
+  }
+}

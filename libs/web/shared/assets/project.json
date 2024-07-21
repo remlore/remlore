@@ -1,0 +1,7 @@
+{
+  "name": "web-shared-assets",
+  "root": "libs/web/shared/assets",
+  "projectType": "library",
+  "sourceRoot": "libs/web/shared/assets/src",
+  "tags": ["type:util", "scope:web"]
+}

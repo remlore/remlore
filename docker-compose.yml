@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  rem.lore-redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+  rem.lore-postgres:
+    image: postgres:13
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_USER: rem.lore
+      POSTGRES_PASSWORD: CtWWPofVtgwS5Xf8s2bSDU64e8QEFm
+      POSTGRES_DB: rem.lore
+    volumes:
+      - ./tmp/postgres:/var/lib/postgresql/data

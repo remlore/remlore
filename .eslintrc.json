@@ -1,0 +1,106 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nrwl/nx"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nrwl/nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "depConstraints": [
+              {
+                "sourceTag": "scope:rem.lore",
+                "onlyDependOnLibsWithTags": ["*"]
+              },
+              {
+                "sourceTag": "scope:rem",
+                "bannedExternalImports": ["@nestjs/*"],
+                "onlyDependOnLibsWithTags": ["scope:web", "scope:rem.lore"]
+              },
+              {
+                "sourceTag": "scope:rem-anime",
+                "bannedExternalImports": ["@nestjs/*"],
+                "onlyDependOnLibsWithTags": ["scope:web", "scope:rem.lore"]
+              },
+              {
+                "sourceTag": "scope:rem-anime",
+                "bannedExternalImports": ["@nestjs/*"],
+                "onlyDependOnLibsWithTags": ["scope:web", "scope:rem.lore"]
+              },
+              {
+                "sourceTag": "scope:rem-anime",
+                "bannedExternalImports": ["@nestjs/*"],
+                "onlyDependOnLibsWithTags": ["scope:web", "scope:rem.lore"]
+              },
+              {
+                "sourceTag": "scope:rem-api",
+                "bannedExternalImports": ["@angular/*"],
+                "onlyDependOnLibsWithTags": ["scope:api", "scope:rem.lore"]
+              },
+              {
+                "sourceTag": "scope:web",
+                "onlyDependOnLibsWithTags": ["scope:web", "scope:rem.lore"],
+                "notDependOnLibsWithTags": ["scope:api"]
+              },
+              {
+                "sourceTag": "scope:api",
+                "onlyDependOnLibsWithTags": ["scope:api", "scope:rem.lore"],
+                "notDependOnLibsWithTags": ["scope:web"]
+              },
+              {
+                "sourceTag": "type:app",
+                "onlyDependOnLibsWithTags": [
+                  "type:feature",
+                  "type:util",
+                  "type:data-access",
+                  "type:ui"
+                ]
+              },
+              {
+                "sourceTag": "type:feature",
+                "onlyDependOnLibsWithTags": [
+                  "type:feature",
+                  "type:util",
+                  "type:data-access",
+                  "type:ui"
+                ]
+              },
+              {
+                "sourceTag": "type:ui",
+                "onlyDependOnLibsWithTags": ["type:util", "type:ui"]
+              },
+              {
+                "sourceTag": "type:data-access",
+                "onlyDependOnLibsWithTags": ["type:util", "type:data-access"]
+              },
+              {
+                "sourceTag": "type:util",
+                "onlyDependOnLibsWithTags": ["type:util"]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
+      "env": {
+        "jest": true
+      },
+      "rules": {}
+    }
+  ]
+}

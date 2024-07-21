@@ -1,0 +1,71 @@
+{
+  "name": "rem-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/rem-api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/rem-api",
+        "main": "apps/rem-api/src/main.ts",
+        "tsConfig": "apps/rem-api/tsconfig.app.json",
+        "assets": [
+          "apps/rem-api/src/favicon.ico",
+          {
+            "glob": "**/*",
+            "input": "libs/api/shared/assets/src",
+            "output": "/"
+          }
+        ],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/rem-api/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "rem-api:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "rem-api:build:development"
+        },
+        "production": {
+          "buildTarget": "rem-api:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/rem-api/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/rem-api/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": ["type:app", "scope:rem-api"]
+}
