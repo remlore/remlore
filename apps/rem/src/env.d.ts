@@ -1,0 +1,25 @@
+// Define the type of the environment variables.
+declare interface Env {
+  readonly NODE_ENV: string
+  // Replace the following with your own environment variables.
+  // Example: NGX_VERSION: string;
+
+  // url
+  readonly REM_APP_NAME: string
+  readonly REM_BASE_URL: string
+  readonly REM_SERVER_API_BASE_URL: string
+  readonly REM_IDS_FE_BASE_URL: string
+  readonly REM_IDS_BASE_URL: string
+
+  [key: string]: any
+}
+
+declare interface ImportMeta {
+  readonly env: Env
+}
+
+// You can modify the name of the variable in angular.json.
+// ngxEnv: {
+//  define: 'REM_',
+// }
+declare const REM_: Env

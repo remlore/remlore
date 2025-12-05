@@ -1,13 +1,13 @@
 import { Test } from '@nestjs/testing'
 import { ScrapeController } from './scrape.controller'
-import { ScrapeService } from './scrape.service'
+import { ScraperService } from './scrape.service'
 
 describe('ScrapeController', () => {
   let controller: ScrapeController
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      providers: [ScrapeService],
+      providers: [ScraperService],
       controllers: [ScrapeController]
     }).compile()
 

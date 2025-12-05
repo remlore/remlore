@@ -9,7 +9,8 @@
   "include": [
     "src/**/*.ts",
     "../common/src/lib/guard/google-auth20.guard.ts",
-    "../../../auth.module.ts"
+    "../../../auth.module.ts",
+    "../core/consumer/src/lib/send-mail/send-mail.consumer.ts"
   ],
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

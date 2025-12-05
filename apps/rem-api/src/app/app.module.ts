@@ -4,12 +4,15 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
-import { AnimeModule } from '@rem.lore/api/anime'
-import { AuthModule } from '@rem.lore/api/auth'
-import { MangaModule } from '@rem.lore/api/manga'
-import { PrismaModule } from '@rem.lore/api/prisma'
-import { UserModule } from '@rem.lore/api/user'
+import { AnimeModule } from '@remlore/api/anime'
+import { AuthModule } from '@remlore/api/auth'
+import { MangaModule } from '@remlore/api/manga'
+import { MovieModule } from '@remlore/api/movie'
+import { PrismaModule } from '@remlore/api/prisma'
+import { ScrapeModule } from '@remlore/api/scrape'
+import { UserModule } from '@remlore/api/user'
 import path from 'path'
+import { AppController } from './app.controller'
 
 @Module({
   imports: [
@@ -48,9 +51,12 @@ import path from 'path'
     }),
     AuthModule,
     AnimeModule,
+    ScrapeModule,
     MangaModule,
+    MovieModule,
     UserModule,
     PrismaModule
-  ]
+  ],
+  controllers: [AppController]
 })
 export class AppModule {}

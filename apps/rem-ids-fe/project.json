@@ -1,0 +1,113 @@
+{
+  "name": "rem-ids-fe",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "rl",
+  "sourceRoot": "apps/rem-ids-fe/src",
+  "tags": ["type:app", "scope:rem-ids-fe"],
+  "targets": {
+    "build": {
+      "executor": "@ngx-env/builder:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/rem-ids-fe",
+        "index": "apps/rem-ids-fe/src/index.html",
+        "browser": "apps/rem-ids-fe/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/rem-ids-fe/tsconfig.app.json",
+        "inlineStyleLanguage": "less",
+        "assets": [
+          "apps/rem-ids-fe/src/favicon.ico",
+          {
+            "glob": "**/*",
+            "input": "libs/ids-fe/shared/assets/src",
+            "output": "/"
+          }
+        ],
+        "styles": ["apps/rem-ids-fe/src/styles.less"],
+        "scripts": [],
+        "server": "apps/rem-ids-fe/src/main.server.ts",
+        "prerender": true,
+        "ssr": {
+          "entry": "apps/rem-ids-fe/server.ts"
+        },
+        "ngxEnv": {
+          "prefix": "REM_",
+          "root": "apps/rem-ids-fe"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/rem-ids-fe/src/environments/environment.ts",
+              "with": "apps/rem-ids-fe/src/environments/environment.prod.ts"
+            }
+          ]
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@ngx-env/builder:dev-server",
+      "options": {
+        "ssl": true,
+        "sslKey": "apps/rem-ids-fe/ids-fe-key.pem",
+        "sslCert": "apps/rem-ids-fe/ids-fe-cert.pem"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "rem-ids-fe:build:production",
+          "port": 4201
+        },
+        "development": {
+          "port": 4201,
+          "buildTarget": "rem-ids-fe:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@ngx-env/builder:extract-i18n",
+      "options": {
+        "buildTarget": "rem-ids-fe:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/rem-ids-fe/jest.config.ts"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "rem-ids-fe:build",
+        "staticFilePath": "dist/apps/rem-ids-fe/browser",
+        "spa": true
+      }
+    }
+  }
+}

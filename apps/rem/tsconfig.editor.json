@@ -1,6 +1,10 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "../../libs/web/shell/feature/src/lib/callback.component.ts",
+    "../../libs/web/shell/feature/src/lib/nx-welcome.component.ts"
+  ],
   "compilerOptions": {
     "types": ["jest", "node"]
   }

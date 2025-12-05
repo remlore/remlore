@@ -1,81 +1,97 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common'
-import { GoogleAuth20Guard, JwtAtGuard, JwtRtGuard, Token, User } from '@rem.lore/api/shared/utils'
-import { UserInfo } from '@rem.lore/shared/util/types'
+import { Controller } from '@nestjs/common'
 import { AuthService } from './auth.service'
-import {
-  AuthChangePasswordDto,
-  AuthChangePasswordWithTokenDto
-} from './dto/auth-change-password.dto'
-import { AuthSignInDto } from './dto/auth-sign-in.dto'
-import { AuthSignUpDto } from './dto/auth-sign-up.dto'
-import { AuthVerifyEmailDto } from './dto/auth-veirfy-email.dto'
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('sign-up')
-  @HttpCode(HttpStatus.CREATED)
-  @HttpCode(HttpStatus.BAD_REQUEST)
-  signUp(@Body() authSignUpDto: AuthSignUpDto) {
-    return this.authService.signUp(authSignUpDto)
-  }
+  // @Post('sign-up')
+  // @HttpCode(HttpStatus.CREATED)
+  // signUp(@Body() dto: SignUpDto) {
+  //   return this.authService.signUp(dto)
+  // }
 
-  @Post('sign-in')
-  signIn(@Body() authSignInDto: AuthSignInDto) {
-    return this.authService.signIn(authSignInDto)
-  }
+  // @Post('sign-in')
+  // @HttpCode(HttpStatus.OK)
+  // signIn(@Body() dto: SignInDto) {
+  //   return this.authService.signIn(dto)
+  // }
 
-  @Post('confirm-email')
-  confirmEmail(@Body() dto: AuthVerifyEmailDto) {
-    return this.authService.verifyEmail(dto.email, dto.hash)
-  }
+  // @Post('verify-sign-up-email')
+  // @HttpCode(HttpStatus.OK)
+  // @UseGuards(JwtAtGuard)
+  // verifySignUpEmail(@Body() dto: VerifyEmailDto) {
+  //   return this.authService.verifySignUpEmail(dto)
+  // }
 
-  @Post('sign-out')
-  @UseGuards(JwtRtGuard)
-  signOut(@Token() refreshToken: string) {
-    return this.authService.signOut(refreshToken)
-  }
+  // @Post('send-verify-sign-up-email')
+  // @HttpCode(HttpStatus.OK)
+  // @UseGuards(JwtAtGuard)
+  // sendVerifySignUpEMail(@User('email') email: string) {
+  //   return this.authService.sendVerifySignUpEMail(email)
+  // }
 
-  @Post('send-email-change-password')
-  sendVerifyEmailChangePassword(@Body() dto: AuthVerifyEmailDto) {
-    return this.authService.sendVerifyChangePassword(dto.email)
-  }
+  // @Post('sign-out')
+  // @UseGuards(JwtRtGuard)
+  // @HttpCode(HttpStatus.OK)
+  // signOut(@User('id') id: number) {
+  //   return this.authService.signOut(id)
+  // }
 
-  @Post('change-password')
-  @UseGuards(JwtAtGuard)
-  changePassword(@Body() dto: AuthChangePasswordDto) {
-    return this.authService.changePassword(dto)
-  }
+  // @Post('request-change-password')
+  // @HttpCode(HttpStatus.OK)
+  // requestChangePasswordEmail(@Body('email') email: string) {
+  //   return this.authService.sendChangePasswordEmail(email)
+  // }
 
-  @Post('change-password-with-token')
-  changePasswordWithToken(
-    @User('userId') userId: string,
-    @Body() dto: AuthChangePasswordWithTokenDto
-  ) {
-    return this.authService.changePasswordWithToken(dto)
-  }
+  // @Patch('change-password-by-old-password')
+  // @UseGuards(JwtAtGuard)
+  // changePasswordByOldPassword(
+  //   @User('id') id: number,
+  //   @Body() dto: ChangePasswordByOldPasswordDto
+  // ): Promise<RlResponse<AuthResponse<Tokens>>> {
+  //   return this.authService.changePasswordByOldPassword(id, dto)
+  // }
 
-  @Post('refresh-token')
-  @UseGuards(JwtRtGuard)
-  refreshToken(@Token() accessToken: string) {
-    return accessToken
-  }
+  // @Patch('change-password-by-token')
+  // changePasswordWithToken(@Body() dto: ChangePasswordByTokenDto) {
+  //   return this.authService.changePasswordByToken(dto)
+  // }
 
-  @Get('auth20')
-  @UseGuards(GoogleAuth20Guard)
-  signInAuth20() {
-    return 'authorized'
-  }
+  // @Post('refresh-token')
+  // @UseGuards(JwtRtGuard)
+  // refreshToken(@Token() accessToken: string) {
+  //   return accessToken
+  // }
 
-  @Get('redirect')
-  @UseGuards(GoogleAuth20Guard)
-  signInAuth20Riderect() {
-    return 'authorized'
-  }
+  // @Get('20')
+  // @UseGuards(GoogleAuth20Guard)
+  // signIn20() {
+  //   // unhandle
+  // }
 
-  @Get('status')
-  status(@User() user: UserInfo) {
-    if (user) return user
-  }
+  // @Put('link-google-account')
+  // @UseGuards(JwtAtGuard)
+  // linkGoogleAccount(@User('id') id: number, googleId: string) {
+  //   return this.authService.linkGoogleAccount(id, googleId)
+  // }
+
+  // @Put('unlink-google-account')
+  // @UseGuards(JwtAtGuard)
+  // unlinkGoogleAccount(@User('id') id: number) {
+  //   return this.authService.unlinkGoogleAccount(id)
+  // }
+
+  // @Get('redirect')
+  // @UseGuards(GoogleAuth20Guard)
+  // signIn20Redirect(@Token() userWithToken: Tokens) {
+  //   return userWithToken
+  // }
+
+  // @Get('status')
+  // @UseGuards(JwtAtGuard)
+  // status(@User() user: UserInfo) {
+  //   console.log(user)
+  //   return user
+  // }
 }

@@ -1,24 +1,36 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { PassportStrategy } from '@nestjs/passport'
-import { JWTEncode } from '@rem.lore/shared/util/types'
+import { Agent } from 'https'
+import jwksRsa from 'jwks-rsa'
 import { ExtractJwt, Strategy } from 'passport-jwt'
-import { AuthService } from '../auth.service'
 
 @Injectable()
 export class JwtAtStrategy extends PassportStrategy(Strategy, 'jwt-at') {
-  constructor(readonly config: ConfigService, private readonly authService: AuthService) {
+  constructor(readonly config: ConfigService) {
+    const httpsAgent = new Agent({
+      rejectUnauthorized: false
+      // ca: readFileSync('apps/rem-api/cert.pem')
+    })
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: config.get<string>('JWT_ACCESS_SECRET')
+      algorithms: ['RS256'],
+      audience: 'https://localhost:5000',
+      issuer: 'https://localhost:5001',
+      secretOrKeyProvider: jwksRsa.passportJwtSecret({
+        cache: true,
+        requestAgent: httpsAgent,
+        rateLimit: true,
+        jwksUri: `${config.get<string>('REM_IDS_BASE_URL')}/oidc/jwks`
+      })
     })
   }
 
-  async validate(payload: Required<JWTEncode>) {
-    const user = await this.authService.verifyAt(payload.sub)
-
-    if (!user?.userId) throw new UnauthorizedException()
-
-    return user
+  async validate(payload: any) {
+    console.log(payload)
+    if (payload.scope && payload.scope.includes('api.read')) {
+      return { userId: payload.sub, username: payload.name, scope: payload.scope }
+    }
+    return false
   }
 }

@@ -4,7 +4,7 @@
   "sourceRoot": "libs/web/shell/ui/layout/src",
   "prefix": "rl",
   "projectType": "library",
-  "tags": ["type:ui;scope:web"],
+  "tags": ["type:ui,scope:rem-web"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

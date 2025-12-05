@@ -1,0 +1,9 @@
+{
+  "name": "shared-util-constants",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/util/constants/src",
+  "projectType": "library",
+  "tags": ["type:util", "scope:rem"],
+  "// targets": "to see all targets run: nx show project shared-util-constants --web",
+  "targets": {}
+}

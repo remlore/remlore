@@ -1,0 +1,21 @@
+(ngSubmit)="onSubmit()"
+<form
+  #from
+  method="post"
+  [action]="idsUrl + '/interaction/' + uid + '/login'"
+  [formGroup]="loginForm">
+  <label for="email">Email: </label>
+  <br />
+  <input name="email" id="email" type="text" formControlName="email" />
+  <br />
+
+  <label for="password">Password: </label>
+  <br />
+  <input id="password" name="password" type="password" formControlName="password" />
+  <br />
+
+  <button type="submit" [disabled]="!loginForm.valid" (click)="from.submit()">Submit</button>
+</form>
+<pre>
+  {{ loginForm.value | json }}
+</pre>

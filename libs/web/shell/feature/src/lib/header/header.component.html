@@ -1,0 +1,10 @@
+<nav style="display: flex; justify-content: space-between">
+  <h3>Remlore app</h3>
+
+  @if (isAuthenticated) {
+    <button (click)="logout()">logout</button>
+  } @else {
+    <button (click)="login()">login</button>
+  }
+</nav>
+<button (click)="getToken()">Get token</button>

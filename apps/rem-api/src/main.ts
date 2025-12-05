@@ -2,11 +2,17 @@ import { Logger, ValidationPipe, VersioningType } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import session from 'express-session'
 
+import { readFileSync } from 'fs'
 import passport from 'passport'
 import { AppModule } from './app/app.module'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, {
+    httpsOptions: {
+      key: readFileSync('apps/rem-api/key.pem'),
+      cert: readFileSync('apps/rem-api/cert.pem')
+    }
+  })
   const globalPrefix = 'api'
 
   app.setGlobalPrefix(globalPrefix)
@@ -21,7 +27,10 @@ async function bootstrap() {
     })
   )
   app.use(passport.initialize())
-  app.use(passport.session())
+  app.enableCors({
+    origin: ['https://localhost:4200'],
+    credentials: true
+  })
 
   const port = process.env.PORT || 5000
 

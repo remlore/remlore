@@ -1,0 +1,8 @@
+{
+  "name": "rem-ids-assets",
+  "root": "libs/api/shared/assets",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ids/shared/assets/src",
+  "projectType": "library",
+  "tags": ["type:util", "scope:rem-ids"]
+}

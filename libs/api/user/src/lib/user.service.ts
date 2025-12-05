@@ -1,48 +1,46 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
-import { PrismaService } from '@rem.lore/api/prisma'
-import { MapedValue, UserInfo, UserQuery } from '@rem.lore/shared/util/types'
+import { PrismaService } from '@remlore/api/prisma'
+import { removeUndefined } from '@remlore/shared/util/fucns'
+import { MappedValue, UserInfo, UserQuery } from '@remlore/shared/util/types'
 import { UserRegisterRemloreDto } from './dto/user-update.dto'
 
 @Injectable()
 export class UserService {
-  private readonly userDefaultSelector: MapedValue<UserInfo, true> = {
+  private readonly userDefaultSelector: MappedValue<UserInfo, true> = {
     email: true,
-    rem_loreUsername: true,
-    displayName: true,
-    photoUrl: true,
-    verified: true,
-    isRemLoreAccount: true
+    id: true
   }
 
   constructor(private readonly prisma: PrismaService) {}
 
-  getProfile(userId: string) {
+  getProfile(userId: number) {
     return this.prisma.user.findUnique({
-      where: { userId },
+      where: { id: userId },
       select: {
-        email: true,
-        rem_loreUsername: true,
-        displayName: true,
-        photoUrl: true,
-        createdAt: true
+        id: true,
+        remloreUsername: true,
+        profile: true
       }
     })
   }
 
-  updateProfile(userId: string, dto: UserRegisterRemloreDto) {
-    if (!userId) throw new BadRequestException('userId unknow')
+  updateProfile(userId: number, dto: UserRegisterRemloreDto) {
+    if (!userId) {
+      throw new BadRequestException('user not found!')
+    }
 
-    return this.prisma.user.update({
+    const data = removeUndefined(dto)
+
+    return this.prisma.profile.update({
       where: { userId },
-      data: dto,
-      select: this.userDefaultSelector
+      data
     })
   }
 
   getAll(query: UserQuery) {
     return this.prisma.user.findMany({
       where: {
-        OR: query
+        OR: [{}]
       }
     })
   }

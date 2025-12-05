@@ -1,10 +1,9 @@
 import { Component } from '@angular/core'
-import { RouterModule } from '@angular/router'
+import { LayoutComponent } from '@remlore/web/shell/feature'
 
 @Component({
   selector: 'rl-root',
-  standalone: true,
-  template: `<router-outlet></router-outlet>`,
-  imports: [RouterModule]
+  template: `<rl-layout></rl-layout>`,
+  imports: [LayoutComponent]
 })
 export class AppComponent {}

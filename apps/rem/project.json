@@ -6,12 +6,12 @@
   "prefix": "rl",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@ngx-env/builder:application",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/rem",
         "index": "apps/rem/src/index.html",
-        "main": "apps/rem/src/main.ts",
+        "browser": "apps/rem/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/rem/tsconfig.app.json",
         "inlineStyleLanguage": "less",
@@ -25,7 +25,16 @@
           }
         ],
         "styles": ["apps/rem/src/styles.less"],
-        "scripts": []
+        "scripts": [],
+        "server": "apps/rem/src/main.server.ts",
+        "prerender": true,
+        "ssr": {
+          "entry": "apps/rem/server.ts"
+        },
+        "ngxEnv": {
+          "prefix": "REM_",
+          "root": "apps/rem"
+        }
       },
       "configurations": {
         "production": {
@@ -41,46 +50,47 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/rem/src/environments/environment.ts",
+              "with": "apps/rem/src/environments/environment.prod.ts"
+            }
+          ]
         },
         "development": {
-          "buildOptimizer": false,
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": false,
-          "sourceMap": true,
-          "namedChunks": true
+          "sourceMap": true
         }
       },
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@ngx-env/builder:dev-server",
+      "options": {
+        "ssl": true,
+        "sslKey": "apps/rem/rem-key.pem",
+        "sslCert": "apps/rem/cert.pem"
+      },
       "configurations": {
         "production": {
-          "browserTarget": "rem:build:production"
+          "buildTarget": "rem:build:production"
         },
         "development": {
-          "browserTarget": "rem:build:development"
+          "buildTarget": "rem:build:development"
         }
       },
-      "defaultConfiguration": "development",
-      "options": {
-        "proxyConfig": "apps/rem/proxy.conf.json"
-      }
+      "defaultConfiguration": "development"
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "@ngx-env/builder:extract-i18n",
       "options": {
-        "browserTarget": "rem:build"
+        "buildTarget": "rem:build"
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/rem/**/*.ts", "apps/rem/**/*.html"]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nrwl/jest:jest",

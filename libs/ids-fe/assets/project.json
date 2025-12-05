@@ -1,0 +1,7 @@
+{
+  "name": "@remlore-ids-fe-shared-assets/util",
+  "root": "libs/ids-fe/shared/assets",
+  "projectType": "library",
+  "sourceRoot": "libs/ids-fe/shared/assets/src",
+  "tags": ["type:util", "scope:rem-ids-fe"]
+}

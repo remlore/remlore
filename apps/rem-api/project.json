@@ -26,8 +26,18 @@
         "webpackConfig": "apps/rem-api/webpack.config.js"
       },
       "configurations": {
-        "development": {},
+        "development": {
+          "sourceMap": true,
+          "args": ["--node-env=development"]
+        },
         "production": {}
+      }
+    },
+    "scrape:init": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "rem-api:build",
+        "script": "dist/apps/rem-api/scripts/initial-scrape.js"
       }
     },
     "serve": {

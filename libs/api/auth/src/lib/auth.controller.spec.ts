@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing'
 import * as pactum from 'pactum'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
-import { AuthSignInDto } from './dto/auth-sign-in.dto'
+import { SignInDto } from './dto'
 
 describe('AuthController', () => {
   let controller: AuthController
@@ -22,11 +22,9 @@ describe('AuthController', () => {
 
   describe('sign in', () => {
     it('should sign in mock', () => {
-      const body: AuthSignInDto = {
-        diplayname: 'Nguyen',
+      const body: SignInDto = {
         email: 'trungnguyen@email.com',
-        password: '123',
-        username: 'trungnguyen'
+        password: '123'
       }
 
       return pactum

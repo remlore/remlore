@@ -1,0 +1,16 @@
+{
+  "name": "decorator",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/core/decorator/src",
+  "projectType": "library",
+  "tags": ["type:util", "scope:rem-api"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/api/core/decorator/jest.config.ts"
+      }
+    }
+  }
+}

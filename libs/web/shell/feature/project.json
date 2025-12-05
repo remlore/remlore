@@ -27,5 +27,5 @@
       }
     }
   },
-  "tags": ["type:feature", "scope:web"]
+  "tags": ["type:feature", "scope:rem-web"]
 }

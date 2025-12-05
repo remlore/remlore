@@ -1,13 +1,7 @@
-import { NullAble } from '../utility'
-
 export interface UserInfo {
-  userId?: NullAble<string>
+  id: number
   email: string
-  verified: boolean
-  isRemLoreAccount: boolean
-  displayName: NullAble<string>
-  rem_loreUsername: NullAble<string>
-  photoUrl: NullAble<string>
+  remloreUserName?: string
 }
 
 export interface UserSignUp {
@@ -28,5 +22,4 @@ export interface UserRegister {
 
 export interface UserQuery {
   username: string
-  email: string
 }

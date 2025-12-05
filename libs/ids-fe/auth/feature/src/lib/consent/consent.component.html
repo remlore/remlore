@@ -1,0 +1,16 @@
+<div>
+  <h2>Consent Required</h2>
+  <p>
+    The application <strong>{{ client }}</strong> wants to access:
+  </p>
+
+  <ul>
+    <li *ngFor="let scope of scopes">
+      <input [id]="scope" type="checkbox" [checked]="true" disabled />
+      <label [for]="scope">{{ scopeMap[scope] }}</label>
+    </li>
+  </ul>
+
+  <button (click)="confirm()">Allow</button>
+  <a [routerLink]="['/auth/abort', uid]">Deny</a>
+</div>

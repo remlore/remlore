@@ -1,17 +1,46 @@
-version: '3.8'
+version: '3.9'
+
 services:
-  rem.lore-redis:
+  remlore-redis:
     image: redis:latest
     restart: always
     ports:
       - 6379:6379
-  rem.lore-postgres:
-    image: postgres:13
+    networks:
+      - remlore
+
+  remlore-api-postgres:
+    image: postgres:17
+    restart: always
     ports:
       - 5434:5432
     environment:
-      POSTGRES_USER: rem.lore
-      POSTGRES_PASSWORD: CtWWPofVtgwS5Xf8s2bSDU64e8QEFm
-      POSTGRES_DB: rem.lore
+      POSTGRES_DB: remlore-api
+      POSTGRES_USER: ${REM_API_DB_USER}
+      POSTGRES_PASSWORD: ${REM_API_DB_PASSWORD}
     volumes:
-      - ./tmp/postgres:/var/lib/postgresql/data
+      - ./tmp/remlore-api:/var/lib/postgresql@17/data
+    networks:
+      - remlore
+
+  remlore-ids-postgres:
+    image: postgres:17
+    restart: always
+    ports:
+      - 5435:5432
+    environment:
+      POSTGRES_DB: remlore-ids
+      POSTGRES_USER: ${REM_API_DB_USER}
+      POSTGRES_PASSWORD: ${REM_IDS_DB_PASSWORD}
+    volumes:
+      - ./tmp/remlore-ids:/var/lib/postgresql/data
+    networks:
+      - remlore
+
+networks:
+  remlore:
+
+
+volumes:
+  remlore-api:
+  remlore-ids:

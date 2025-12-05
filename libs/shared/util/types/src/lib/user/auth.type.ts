@@ -1,12 +1,12 @@
-import { NullAble } from '../utility'
+import { Maybe } from '../utility'
 import { UserInfo } from './user.type'
 
 export interface AuthResponse<AT = object> {
-  statusCode: NullAble<number>
-  status: NullAble<'success' | 'failed'>
+  statusCode: Maybe<number>
+  status: Maybe<'success' | 'failed'>
   message: string[] | string
-  user: NullAble<UserInfo> & NullAble<AT>
-  error: NullAble<string>
+  user: Maybe<UserInfo> & Maybe<AT>
+  error: Maybe<string>
 }
 
 export interface Tokens {

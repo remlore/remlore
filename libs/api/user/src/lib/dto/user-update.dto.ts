@@ -1,4 +1,5 @@
-import { IsString, IsUrl, MinLength } from 'class-validator'
+import { EGender } from '@prisma/client'
+import { IsEnum, IsString, IsUrl, MaxLength, MinLength } from 'class-validator'
 
 export class UserRegisterRemloreDto {
   @IsString()
@@ -8,4 +9,19 @@ export class UserRegisterRemloreDto {
   @IsString()
   @IsUrl()
   photoUrl?: string
+
+  @IsString()
+  @IsUrl()
+  backgroundUrl?: string
+
+  @IsEnum(EGender)
+  gender?: EGender
+
+  @IsString()
+  @MaxLength(400)
+  bio?: string
+
+  @IsString()
+  @MaxLength(400)
+  birthday?: string
 }

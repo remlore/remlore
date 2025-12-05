@@ -1,0 +1,17 @@
+{
+  "name": "enums",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/util/enums/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["type:util", "scope:rem"],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/util/enums/**/*.ts"]
+      }
+    }
+  }
+}
