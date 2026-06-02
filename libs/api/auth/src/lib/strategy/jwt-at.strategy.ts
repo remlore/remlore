@@ -21,7 +21,7 @@ export class JwtAtStrategy extends PassportStrategy(Strategy, 'jwt-at') {
         cache: true,
         requestAgent: httpsAgent,
         rateLimit: true,
-        jwksUri: `${config.get<string>('REM_IDS_BASE_URL')}/oidc/jwks`
+        jwksUri: `${config.get<string>('IDS_URL')}/oidc/jwks`
       })
     })
   }

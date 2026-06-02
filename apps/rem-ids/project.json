@@ -6,37 +6,52 @@
   "tags": ["type:app", "scope:rem-ids"],
   "targets": {
     "build": {
-      "executor": "@nrwl/webpack:webpack",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/apps/rem-ids"],
       "options": {
-        "target": "node",
-        "compiler": "tsc",
-        "outputPath": "dist/apps/rem-ids",
-        "main": "apps/rem-ids/src/main.ts",
-        "tsConfig": "apps/rem-ids/tsconfig.app.json",
-        "assets": [
-          "apps/rem-ids/src/favicon.ico",
-          {
-            "glob": "**/*",
-            "input": "libs/ids/shared/assets/src",
-            "output": "/"
-          }
-        ],
-        "isolatedConfig": true,
-        "webpackConfig": "apps/rem-ids/webpack.config.js",
-        "envFile": "apps/rem-ids/.env"
+        "command": "webpack-cli build",
+        "args": ["--node-env=production"],
+        "cwd": "apps/rem-ids"
       },
       "configurations": {
-        "development": {},
-        "production": {}
+        "development": {
+          "args": ["--node-env=development"]
+        }
       }
     },
+    "prune-lockfile": {
+      "dependsOn": ["build"],
+      "cache": true,
+      "executor": "@nx/js:prune-lockfile",
+      "outputs": [
+        "{workspaceRoot}/dist/apps/rem-ids/package.json",
+        "{workspaceRoot}/dist/apps/rem-ids/package-lock.json"
+      ],
+      "options": {
+        "buildTarget": "build"
+      }
+    },
+    "copy-workspace-modules": {
+      "dependsOn": ["build"],
+      "cache": true,
+      "outputs": ["{workspaceRoot}/dist/apps/rem-ids/workspace_modules"],
+      "executor": "@nx/js:copy-workspace-modules",
+      "options": {
+        "buildTarget": "build"
+      }
+    },
+    "prune": {
+      "dependsOn": ["prune-lockfile", "copy-workspace-modules"],
+      "executor": "nx:noop"
+    },
     "serve": {
+      "continuous": true,
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
+      "dependsOn": ["build"],
       "options": {
-        "buildTarget": "rem-ids:build"
+        "buildTarget": "rem-ids:build",
+        "runBuildTargetDependencies": false
       },
       "configurations": {
         "development": {
@@ -45,20 +60,6 @@
         "production": {
           "buildTarget": "rem-ids:build:production"
         }
-      }
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "apps/rem-ids/jest.config.ts"
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/rem-api/**/*.ts"]
       }
     }
   }

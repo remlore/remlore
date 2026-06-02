@@ -7,7 +7,7 @@ import { OidcSecurityService } from 'angular-auth-oidc-client'
   selector: 'rl-callback',
   imports: [CommonModule, RouterLink],
   templateUrl: './callback.component.html',
-  styleUrl: './callback.component.less'
+  styleUrl: './callback.component.scss'
 })
 export class CallbackComponent implements OnInit {
   constructor(

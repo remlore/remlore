@@ -8,7 +8,7 @@ export const randomString = (length: number, special = false) => {
 
   let password = ''
 
-  for (let i = 0; i < length; i++) password += str[Math.floor(Math.random() * str.length)]
+  for (let i = 0; i < length; i++) password += str.charAt(Math.floor(Math.random() * str.length))
 
   return password
 }

@@ -1,0 +1,93 @@
+.card-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 600px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  cursor: grab;
+
+  &.dragging {
+    cursor: grabbing;
+    transition: none;
+  }
+}
+
+.word-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.word-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.word-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 16px 0;
+  text-align: center;
+  color: #2196F3;
+}
+
+.word-definition {
+  margin: 12px 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.word-example {
+  margin: 12px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.translation-box {
+  background: #E3F2FD;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 12px 0;
+  
+  p {
+    margin: 0;
+    color: #1976D2;
+    font-weight: 500;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+  justify-content: center;
+
+  button {
+    flex: 1;
+  }
+}
+
+.swipe-actions {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  margin-top: auto;
+
+  button {
+    width: 64px;
+    height: 64px;
+  }
+
+  .dislike-btn {
+    background-color: #f44336;
+  }
+
+  .like-btn {
+    background-color: #4CAF50;
+  }
+}

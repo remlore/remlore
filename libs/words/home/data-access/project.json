@@ -1,0 +1,20 @@
+{
+  "name": "words-home-data-access",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/words/home/data-access/src",
+  "prefix": "rl",
+  "projectType": "library",
+  "tags": ["type:ui", "scope:rem-words"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/words/home/data-access/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

@@ -1,0 +1,145 @@
+@use 'diagonal-layout';
+
+.consent-page {
+  .consent-wrapper {
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .consent-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    .app-icon {
+      font-size: 64px;
+      width: 64px;
+      height: 64px;
+      color: #03a9f4;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+
+    .client-name {
+      font-size: 1.1rem;
+      color: #666;
+    }
+  }
+
+  .consent-card {
+    mat-card-content {
+      padding: 2rem;
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+
+        mat-icon {
+          font-size: 48px;
+          width: 48px;
+          height: 48px;
+          color: #1976d2;
+        }
+
+        .user-name {
+          font-weight: 500;
+          font-size: 1.1rem;
+          margin: 0;
+        }
+
+        .user-email {
+          color: #666;
+          margin: 0;
+        }
+      }
+
+      mat-divider {
+        margin: 1.5rem 0;
+      }
+
+      .scopes-section {
+        h3 {
+          font-size: 1rem;
+          font-weight: 500;
+          margin-bottom: 1rem;
+          color: #333;
+        }
+
+        mat-list {
+          mat-list-item {
+            height: auto;
+            padding: 0.5rem 0;
+
+            .scope-item {
+              display: flex;
+              flex-direction: column;
+
+              .scope-name {
+                font-weight: 500;
+                margin-bottom: 0.25rem;
+              }
+
+              .scope-description {
+                font-size: 0.875rem;
+                color: #666;
+              }
+            }
+          }
+        }
+      }
+
+      .consent-notice {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem;
+        background: #e3f2fd;
+        border-radius: 4px;
+        margin-top: 1.5rem;
+
+        mat-icon {
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+        }
+
+        p {
+          margin: 0;
+          font-size: 0.875rem;
+          color: #1976d2;
+        }
+      }
+    }
+
+    mat-card-actions {
+      padding: 1rem 2rem 2rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+
+      button {
+        min-width: 150px;
+        padding: 12px 24px;
+
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+
+      .deny-btn {
+        border-color: #f44336;
+        color: #f44336;
+
+        &:hover {
+          background: #ffebee;
+        }
+      }
+    }
+  }
+}

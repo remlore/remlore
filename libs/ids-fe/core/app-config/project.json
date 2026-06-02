@@ -4,7 +4,7 @@
   "sourceRoot": "libs/ids-fe/core/app-config/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": ["type:data-access", "scope:rem-ids-fe"],
+  "tags": ["type:util", "scope:rem-ids-fe"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

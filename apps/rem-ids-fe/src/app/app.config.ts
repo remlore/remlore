@@ -3,8 +3,8 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core'
 import { provideClientHydration } from '@angular/platform-browser'
 import { provideRouter } from '@angular/router'
 import { provideAppConfig } from '@remlore/ids-fe/core/app-config'
+import { appRoutes } from '@remlore/ids-fe/shell/feature'
 import { environment } from '../environments/environment'
-import { appRoutes } from './app.routes'
 
 export const appConfig: ApplicationConfig = {
   providers: [

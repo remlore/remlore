@@ -1,21 +1,85 @@
-(ngSubmit)="onSubmit()"
-<form
-  #from
-  method="post"
-  [action]="idsUrl + '/interaction/' + uid + '/login'"
-  [formGroup]="loginForm">
-  <label for="email">Email: </label>
-  <br />
-  <input name="email" id="email" type="text" formControlName="email" />
-  <br />
+<div class="page-container login-page">
+  <div class="content-section">
+    <div class="form-wrapper">
+      <div class="form-header">
+        <h1>Welcome Back</h1>
+        <p>Sign in to your account</p>
+      </div>
 
-  <label for="password">Password: </label>
-  <br />
-  <input id="password" name="password" type="password" formControlName="password" />
-  <br />
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="you@example.com">
+          <mat-icon matPrefix>email</mat-icon>
+          @if (loginForm.get('email')?.hasError('required')) {
+          <mat-error>
+            Email is required
+          </mat-error>
+          }
+          @if(loginForm.get('email')?.hasError('email')) {
+          <mat-error>
+            Please enter a valid email
+          </mat-error>
+          }
+        </mat-form-field>
 
-  <button type="submit" [disabled]="!loginForm.valid" (click)="from.submit()">Submit</button>
-</form>
-<pre>
-  {{ loginForm.value | json }}
-</pre>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          @if (loginForm.get('password')?.hasError('required')) {
+          <mat-error>
+            Password is required
+          </mat-error>
+          }
+        </mat-form-field>
+
+        <div class="form-options">
+          <mat-checkbox formControlName="rememberMe">Remember me</mat-checkbox>
+          <a routerLink="/auth/change-password" class="link">Forgot password?</a>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit"
+          [disabled]="loginForm.invalid || loading" class="submit-btn">
+          @if (loading) {
+          <mat-spinner diameter="20"></mat-spinner>
+          } @else {
+          <span>Sign In</span>
+          }
+        </button>
+
+        <mat-divider class="divider">
+          <span class="divider-text">OR</span>
+        </mat-divider>
+
+        <div class="social-login">
+          <button mat-stroked-button type="button" class="social-btn google-btn">
+            <mat-icon svgIcon="google"></mat-icon>
+            Continue with Google
+          </button>
+          <button mat-stroked-button type="button" class="social-btn facebook-btn">
+            <mat-icon svgIcon="facebook"></mat-icon>
+            Continue with Facebook
+          </button>
+        </div>
+
+        <div class="form-footer">
+          <p>
+            Don't have an account?
+            <a routerLink="/auth/register" [queryParams]="{ uid: uid }" class="link">Sign up</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="image-section">
+    <div class="brand-overlay">
+      <mat-icon class="large-icon">lock_open</mat-icon>
+      <h2>Secure Access</h2>
+      <p>Your gateway to all connected applications</p>
+    </div>
+  </div>
+</div>

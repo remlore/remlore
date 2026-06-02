@@ -7,7 +7,7 @@ import { OidcSecurityService } from 'angular-auth-oidc-client'
   selector: 'rl-header',
   imports: [CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.less'
+  styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
   isAuthenticated = false

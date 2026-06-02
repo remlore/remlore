@@ -15,16 +15,22 @@
         "browser": "apps/rem-ids-fe/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/rem-ids-fe/tsconfig.app.json",
-        "inlineStyleLanguage": "less",
+        "inlineStyleLanguage": "scss",
         "assets": [
           "apps/rem-ids-fe/src/favicon.ico",
           {
             "glob": "**/*",
-            "input": "libs/ids-fe/shared/assets/src",
-            "output": "/"
+            "input": "libs/ids-fe/core/assets/src",
+            "output": "assets"
           }
         ],
-        "styles": ["apps/rem-ids-fe/src/styles.less"],
+        "styles": [
+          "@angular/material/prebuilt-themes/azure-blue.css",
+          "apps/rem-ids-fe/src/styles/styles.scss"
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["apps/rem-ids-fe/src/styles"]
+        },
         "scripts": [],
         "server": "apps/rem-ids-fe/src/main.server.ts",
         "prerender": true,
@@ -71,7 +77,8 @@
       "options": {
         "ssl": true,
         "sslKey": "apps/rem-ids-fe/ids-fe-key.pem",
-        "sslCert": "apps/rem-ids-fe/ids-fe-cert.pem"
+        "sslCert": "apps/rem-ids-fe/ids-fe-cert.pem",
+        "proxyConfig": "apps/rem-ids-fe/proxy.conf.json"
       },
       "configurations": {
         "production": {

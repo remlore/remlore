@@ -1,0 +1,50 @@
+<div class="devices-page">
+  <h1>Devices & Login History</h1>
+  <p class="subtitle">Manage devices that have accessed your account</p>
+
+  <mat-card class="devices-card">
+    <mat-card-header>
+      <mat-card-title>Active Sessions</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="device-list">
+        @for (device of devices; track $index) {
+        <div class="device-item">
+          <div class="device-icon">
+            <mat-icon>{{getDeviceIcon(device.type)}}</mat-icon>
+          </div>
+          <div class="device-info">
+            <div class="device-header">
+              <h3>{{device.name}}</h3>
+              @if (device.current) {
+              <mat-chip class="current-chip">Current</mat-chip>
+              }
+            </div>
+            <p class="device-details">
+              <mat-icon class="small-icon">location_on</mat-icon>
+              {{device.location}}
+            </p>
+            <p class="device-details">
+              <mat-icon class="small-icon">schedule</mat-icon>
+              Last active: {{device.lastActive | date:'medium'}}
+            </p>
+          </div>
+          <div class="device-actions">
+            <button mat-icon-button color="warn" (click)="revokeSession(device.id)"
+              [disabled]="device.current">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        }
+      </div>
+
+      <div class="card-actions">
+        <button mat-raised-button color="warn" (click)="revokeAllSessions()">
+          <mat-icon>logout</mat-icon>
+          Sign Out All Devices
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

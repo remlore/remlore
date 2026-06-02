@@ -4,10 +4,10 @@ declare interface Env {
   // Replace the following with your own environment variables.
   // Example: NGX_VERSION: string;
   readonly REM_BASE_URL: string
-  readonly REM_SERVER_API_BASE_URL: string
-  readonly REM_IDS_FE_BASE_URL: string
-  readonly REM_IDS_BASE_URL: string
-  [key: string]: any
+  readonly REM_IDS_URL: string
+  readonly REM_API_URL: string
+  readonly REM_IDS_FE_URL: string
+  [key: string]: string | number
 }
 
 declare interface ImportMeta {

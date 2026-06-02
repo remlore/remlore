@@ -1,0 +1,99 @@
+.devices-page {
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  .subtitle {
+    color: #666;
+    margin-bottom: 2rem;
+  }
+
+  .devices-card {
+    mat-card-header {
+      margin-bottom: 1.5rem;
+    }
+
+    mat-card-content {
+      .device-list {
+        .device-item {
+          display: flex;
+          align-items: center;
+          padding: 1.5rem;
+          border: 1px solid #e0e0e0;
+          border-radius: 8px;
+          margin-bottom: 1rem;
+          transition: box-shadow 0.3s;
+
+          &:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          }
+
+          .device-icon {
+            mat-icon {
+              font-size: 48px;
+              width: 48px;
+              height: 48px;
+              color: #1976d2;
+              margin-right: 1.5rem;
+            }
+          }
+
+          .device-info {
+            flex: 1;
+
+            .device-header {
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+              margin-bottom: 0.5rem;
+
+              h3 {
+                margin: 0;
+                font-size: 1.1rem;
+                color: #333;
+              }
+
+              .current-chip {
+                background: #4caf50;
+                color: white;
+                font-size: 0.75rem;
+                height: 24px;
+              }
+            }
+
+            .device-details {
+              display: flex;
+              align-items: center;
+              margin: 0.25rem 0;
+              font-size: 0.9rem;
+              color: #666;
+
+              .small-icon {
+                font-size: 18px;
+                width: 18px;
+                height: 18px;
+                margin-right: 0.5rem;
+              }
+            }
+          }
+
+          .device-actions {
+            margin-left: 1rem;
+          }
+        }
+      }
+
+      .card-actions {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e0e0e0;
+
+        button mat-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}

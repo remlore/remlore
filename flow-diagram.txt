@@ -1,0 +1,88 @@
+## **Complete Flow Diagram**
+```
+// Single login component
+// Context determined by query parameters
+URL Patterns:
+- OAuth: /login?interaction={uid}
+- Direct: /login
+- With redirect: /login?continue=/account/settings
+
+┌─────────────────────────────────────────────────────────────────┐
+│ Flow 1: OAuth Login (FROM CLIENT APP)                           │
+└─────────────────────────────────────────────────────────────────┘
+
+User on Client App (localhost:4200)
+    │
+    ├─ Clicks "Login"
+    │
+    ▼
+Client redirects to:
+http://localhost:5001/authorize?
+  client_id=client-app&
+  redirect_uri=http://localhost:4200/callback&
+  response_type=code&
+  scope=openid profile email
+    │
+    ▼
+IDS Backend creates interaction UID
+    │
+    ▼
+IDS redirects to:
+http://localhost:4201/auth/login?interaction={uid}
+    │
+    ▼
+IDS Frontend (Angular) loads OAuthLoginComponent
+    │
+    ├─ Checks if user has IDS session
+    │  ├─ YES → Show "Continue as User"
+    │  └─ NO → Show login form
+    │
+    ▼
+User logs in or continues
+    │
+    ▼
+POST http://localhost:5001/interaction/{uid}/login
+    │
+    ▼
+IDS completes OAuth flow
+    │
+    ▼
+Redirects to: http://localhost:4200/callback?code=...
+    │
+    ▼
+Client exchanges code for tokens
+    │
+    ▼
+User authenticated in Client App!
+
+
+┌─────────────────────────────────────────────────────────────────┐
+│ Flow 2: Direct IDS Login (USER GOES DIRECTLY TO IDS)            │
+└─────────────────────────────────────────────────────────────────┘
+
+User navigates directly to:
+http://localhost:4201
+    │
+    ├─ Not logged in → Redirects to /login
+    │
+    ▼
+IDS Frontend shows DirectLoginComponent
+    │
+    ▼
+User enters credentials
+    │
+    ▼
+POST http://localhost:5001/auth/login
+    │
+    ▼
+IDS creates session
+    │
+    ▼
+Redirects to: http://localhost:4201/dashboard
+    │
+    ▼
+User can manage:
+  - Profile settings
+  - Active sessions
+  - Connected apps
+  - Security settings

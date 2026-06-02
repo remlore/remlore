@@ -13,7 +13,7 @@ export class JwtAtStrategy extends PassportStrategy(Strategy, 'jwt-at') {
       secretOrKeyProvider: jwksRsa.passportJwtSecret({
         cache: true,
         rateLimit: true,
-        jwksUri: `${config.get<string>('REM_IDS_BASE_URL')}/oidc/jwks`
+        jwksUri: `${config.get<string>('IDS_URL')}/oidc/jwks`
       })
     })
   }

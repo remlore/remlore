@@ -4,7 +4,7 @@
   "sourceRoot": "libs/web/shared/components/src",
   "prefix": "rl",
   "projectType": "library",
-  "tags": ["type:ui,scope:rem-web"],
+  "tags": ["type:util", "scope:rem-web"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

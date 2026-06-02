@@ -1,0 +1,121 @@
+<div class="page-container register-page">
+  <div class="content-section">
+    <div class="form-wrapper">
+      <div class="form-header">
+        <h1>Create Account</h1>
+        <p>Join us today</p>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Display name</mat-label>
+          <input matInput formControlName="displayName" placeholder="John Doe">
+          <mat-icon matPrefix>person</mat-icon>
+          @if (registerForm.get('displayName')?.hasError('required')) {
+          <mat-error>
+            Display name is required
+          </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="you@example.com">
+          <mat-icon matPrefix>email</mat-icon>
+          @if (registerForm.get('email')?.hasError('required')) {
+          <mat-error>
+            Email is required
+          </mat-error>
+          }
+          @if (registerForm.get('email')?.hasError('email')) {
+          <mat-error>
+            Please enter a valid email
+          </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          @if (registerForm.get('password')?.hasError('required')) {
+          <mat-error>
+            Password is required
+          </mat-error>
+          }
+          @if (registerForm.get('password')?.hasError('minlength')) {
+          <mat-error>
+            Password must be at least 8 characters
+          </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput [type]="hideConfirmPassword ? 'password' : 'text'"
+            formControlName="confirmPassword">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword"
+            type="button">
+            <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          @if (registerForm.get('confirmPassword')?.hasError('required')) {
+          <mat-error>
+            Please confirm your password
+          </mat-error>
+          }
+          @if (registerForm.get('confirmPassword')?.hasError('passwordMismatch')) {
+          <mat-error>
+            Passwords do not match
+          </mat-error>
+          }
+        </mat-form-field>
+
+        <div class="form-options">
+          <mat-checkbox formControlName="agreeToTerms">
+            I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#"
+              class="link">Privacy Policy</a>
+          </mat-checkbox>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit"
+          [disabled]="registerForm.invalid || loading" class="submit-btn">
+          @if (loading) {
+          <mat-spinner diameter="20"></mat-spinner>
+          } @else {
+          <span>Create Account</span>
+          }
+        </button>
+
+        <mat-divider class="divider">
+          <span class="divider-text">OR</span>
+        </mat-divider>
+
+        <div class="social-login">
+          <button mat-stroked-button type="button" class="social-btn google-btn">
+            <mat-icon svgIcon="google"></mat-icon>
+            Sign up with Google
+          </button>
+          <button mat-stroked-button type="button" class="social-btn facebook-btn">
+            <mat-icon svgIcon="facebook"></mat-icon>
+            Sign up with Facebook
+          </button>
+        </div>
+
+        <div class="form-footer">
+          <p>Already have an account? <a routerLink="/auth/login" class="link">Sign in</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="image-section">
+    <div class="brand-overlay">
+      <mat-icon class="large-icon">person_add</mat-icon>
+      <h2>Join Our Community</h2>
+      <p>Get started in seconds</p>
+    </div>
+  </div>
+</div>

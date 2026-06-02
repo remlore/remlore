@@ -9,12 +9,12 @@ export class JwtAtStrategy extends PassportStrategy(Strategy, 'jwt-at') {
   constructor(readonly config: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: config.get<string>('JWT_ACCESS_SECRET')
+      secretOrKey: config.get<string>('JWT_ACCESS_SECRET') as string
     })
   }
 
   async validate(payload: Required<JWTEncode>) {
-    if (!payload?.sub) throw new UnauthorizedException()
+    if (!payload?.sub) return new UnauthorizedException()
 
     return payload
   }

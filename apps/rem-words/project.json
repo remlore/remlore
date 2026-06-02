@@ -1,0 +1,99 @@
+{
+  "name": "rem-words",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "rl",
+  "sourceRoot": "apps/rem-words/src",
+  "tags": ["type:app", "scope:rem-words"],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/rem-words",
+        "index": "apps/rem-words/src/index.html",
+        "browser": "apps/rem-words/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/rem-words/tsconfig.app.json",
+        "inlineStyleLanguage": "less",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/rem-words/public"
+          }
+        ],
+        "styles": ["apps/rem-words/src/styles.less"],
+        "scripts": [],
+        "server": "apps/rem-words/src/main.server.ts",
+        "prerender": true,
+        "ssr": {
+          "entry": "apps/rem-words/server.ts"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "port": 4202,
+        "proxyConfig": "apps/rem-words/proxy.conf.json"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "rem-words:build:production"
+        },
+        "development": {
+          "buildTarget": "rem-words:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "rem-words:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/rem-words/jest.config.ts"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "rem-words:build",
+        "port": 4202,
+        "staticFilePath": "dist/apps/rem-words/browser",
+        "spa": true
+      }
+    }
+  }
+}

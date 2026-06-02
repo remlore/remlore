@@ -1,0 +1,89 @@
+@use 'diagonal-layout';
+
+.home-page {
+  .welcome-content {
+    max-width: 600px;
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #1976d2;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: #666;
+      margin-bottom: 3rem;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+
+      .feature-item {
+        text-align: center;
+
+        mat-icon {
+          font-size: 48px;
+          width: 48px;
+          height: 48px;
+          color: #03a9f4;
+          margin-bottom: 1rem;
+        }
+
+        h3 {
+          font-size: 1.1rem;
+          margin-bottom: 0.5rem;
+          color: #333;
+        }
+
+        p {
+          font-size: 0.9rem;
+          color: #666;
+        }
+      }
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+
+      button {
+        min-width: 160px;
+        padding: 12px 24px;
+        font-size: 1rem;
+
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+
+  .image-section .brand-overlay {
+    text-align: center;
+    color: white;
+
+    .large-icon {
+      font-size: 120px;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 300;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .home-page .welcome-content h1 {
+    font-size: 2rem;
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "name": "@rem-ids-fe-auth/data-access",
+  "name": "ids-fe-auth-data-access",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/ids-fe/auth/data-access/src",
   "prefix": "rl",

@@ -1,0 +1,41 @@
+<mat-toolbar color="primary">
+  <span>English Learning App</span>
+  <span class="spacer"></span>
+  <button mat-icon-button>
+    <mat-icon>settings</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="container">
+  <div class="progress-bar">
+    <div class="progress-fill" [style.width.%]="progress"></div>
+  </div>
+
+  <div class="word-count">
+    {{ currentIndex }} / {{ words.length }} từ
+  </div>
+
+  @if (!isLoading) {
+  <div class="card-stack">
+    @if (currentWord) {
+    <rl-word-card [word]="currentWord" (swipe)="onSwipe($event)">
+    </rl-word-card>
+    }
+
+    @if (!currentWord && words.length > 0) {
+    <div class="completion-message">
+      <h2>🎉 Hoàn thành!</h2>
+      <p>Bạn đã học xong {{ words.length }} từ hôm nay!</p>
+      <button mat-raised-button color="primary" (click)="loadWords()">
+        Học thêm
+      </button>
+    </div>
+    }
+  </div>
+  } @else {
+  <div class="loading">
+    <mat-spinner></mat-spinner>
+    <p>Đang tải từ vựng...</p>
+  </div>
+  }
+</div>

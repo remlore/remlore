@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   remlore-redis:
     image: redis:latest
@@ -9,38 +7,73 @@ services:
     networks:
       - remlore
 
-  remlore-api-postgres:
-    image: postgres:17
-    restart: always
+  remlore-api:
+    image: postgres:latest
     ports:
-      - 5434:5432
+      - "5432:5432"
     environment:
       POSTGRES_DB: remlore-api
       POSTGRES_USER: ${REM_API_DB_USER}
       POSTGRES_PASSWORD: ${REM_API_DB_PASSWORD}
     volumes:
-      - ./tmp/remlore-api:/var/lib/postgresql@17/data
+      - remlore-api:/var/lib/postgresql
     networks:
       - remlore
 
-  remlore-ids-postgres:
-    image: postgres:17
-    restart: always
+  remlore-ids:
+    image: postgres:latest
     ports:
-      - 5435:5432
+      - "5433:5432"
     environment:
       POSTGRES_DB: remlore-ids
-      POSTGRES_USER: ${REM_API_DB_USER}
+      POSTGRES_USER: ${REM_IDS_DB_USER}
       POSTGRES_PASSWORD: ${REM_IDS_DB_PASSWORD}
     volumes:
-      - ./tmp/remlore-ids:/var/lib/postgresql/data
+      - remlore-ids:/var/lib/postgresql
     networks:
       - remlore
+
+  remlore-words:
+    image: postgres:latest
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_DB: remlore-words
+      POSTGRES_USER: ${REM_WORDS_DB_USER}
+      POSTGRES_PASSWORD: ${REM_WORDS_DB_PASSWORD}
+    volumes:
+      - remlore-words:/var/lib/postgresql
+    networks:
+      - remlore
+
+  # identity-server:
+  #   build:
+  #     context: .
+  #     dockerfile: backend/Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     NODE_ENV: production
+  #     DATABASE_URL: postgresql://idsuser:idspassword@postgres:5432/identity_server
+  #     REDIS_URL: redis://redis:6379
+  #     ISSUER_URL: https://your-domain.com
+  #     COOKIE_SECRET: your-super-secret-cookie-key-change-this
+  #     SMTP_HOST: smtp.gmail.com
+  #     SMTP_PORT: 587
+  #     SMTP_USER: your-email@gmail.com
+  #     SMTP_PASS: your-app-password
+  #     EMAIL_FROM: noreply@your-domain.com
+  #   depends_on:
+  #     - postgres
+  #     - redis
+  #   networks:
+  #     - ids-network
 
 networks:
   remlore:
 
-
 volumes:
   remlore-api:
   remlore-ids:
+  remlore-words:
+  

@@ -1,5 +1,5 @@
 {
-  "name": "consumer",
+  "name": "api-core-consumer",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/api/core/consumer/src",
   "projectType": "library",

@@ -1,0 +1,247 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "./src/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ERole {
+  Admin
+  User
+  Guest
+}
+
+enum EAchievement {
+  LV22
+  OneYear
+  ThreeYear
+  Longly
+}
+
+enum EReaction {
+  Like
+  Dislike
+  Haha
+  Love
+  Sad
+  Angry
+}
+
+enum EMovieType {
+  single
+  series
+  tvshows
+  hoathinh
+  anime
+}
+
+enum EMovieStatus {
+  completed
+  trailer
+  ongoing
+}
+
+enum EGender {
+  Male
+  Female
+  Other
+}
+
+model User {
+  id Int @id @default(autoincrement())
+
+  remloreUsername String?  @unique @db.VarChar(50)
+  registerTime    DateTime @default(now())
+
+  role        ERole         @default(User)
+  achievement EAchievement?
+  profile     Profile?
+
+  xps       XP[]
+  comments  Comment[]
+  posts     Post[]
+  reactions Reaction[]
+  favorites Tag[]
+  Votes     Vote[]
+}
+
+model Profile {
+  userId Int @id
+
+  displayName   String?   @db.VarChar(100)
+  photoUrl      String?   @db.VarChar(500)
+  backgroundUrl String?   @db.VarChar(500)
+  bio           String?   @db.VarChar(400)
+  setting       Json      @default("{}")
+  birthday      DateTime? @db.Timestamp()
+  gender        EGender?
+
+  updatedTime DateTime? @updatedAt() @db.Timestamp()
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model XP {
+  id     String @id @default(uuid())
+  userId Int
+
+  xp Int @default(0)
+  lv Int @default(0)
+
+  user User? @relation(fields: [userId], references: [id])
+}
+
+model Movie {
+  id       Int     @id @default(autoincrement())
+  scrapeId String? @unique
+
+  name       String @db.VarChar(1024)
+  originName String @db.VarChar(1024)
+  slug       String @unique
+
+  type   EMovieType
+  status EMovieStatus
+
+  content    String  @db.Text
+  thumbUrl   String
+  posterUrl  String
+  trailerUrl String? @db.VarChar(2048)
+  quality    String? @default("HD")
+  lang       String? @default("Vietsub")
+  showTime   String? @db.VarChar(512)
+
+  currentEp  String?
+  totalEp    String?
+  publicYear Int?
+
+  view         Int     @default(0)
+  isCompleted  Boolean @default(false)
+  movieTheater Boolean @default(false)
+
+  createdDate  DateTime @default(now())
+  lastModified DateTime @default(now())
+  lastScraped  DateTime @default(now())
+
+  voteAverage Float?
+  voteCount   Int    @default(0)
+
+  categories Category[]
+  countries  Country[]
+  episodes   Episode[]
+  votes      Vote[]
+  tags       Tag[]
+}
+
+model ScrapeStatus {
+  id              String    @id @default(uuid())
+  lastPageScraped Int       @default(0)
+  totalPages      Int
+  isCompleted     Boolean   @default(false)
+  startedAt       DateTime  @default(now())
+  completedAt     DateTime?
+}
+
+model Vote {
+  id String @id @default(uuid())
+
+  score Int
+
+  userId  Int
+  movieId Int
+
+  user  User  @relation(fields: [userId], references: [id])
+  movie Movie @relation(fields: [movieId], references: [id])
+}
+
+model Category {
+  id       Int     @id @default(autoincrement())
+  scrapeId String? @unique
+  name     String
+  slug     String  @unique
+  movies   Movie[]
+}
+
+model Country {
+  id       Int     @id @default(autoincrement())
+  scrapeId String? @unique
+  name     String
+  slug     String  @unique
+  movies   Movie[]
+}
+
+model Episode {
+  id          Int     @id @default(autoincrement())
+  name        String
+  slug        String
+  serverName  String
+  filename    String?
+  sourceEmbed String?
+  sourceM3u8  String?
+
+  movieId Int
+  movie   Movie @relation(fields: [movieId], references: [id])
+
+  // @@unique([movieId, serverName, slug])
+}
+
+model Tag {
+  id Int @id @default(autoincrement())
+
+  name        String  @db.VarChar(50)
+  slug        String  @unique @db.VarChar(50)
+  description String?
+
+  users  User[]
+  movies Movie[]
+}
+
+model Comment {
+  id     String @id @default(uuid())
+  userId Int
+
+  content  String  @db.VarChar(400)
+  hasReply Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @db.Timestamp()
+
+  replies Comment[] @relation("replies")
+  user    User      @relation(fields: [userId], references: [id])
+  parent  Comment?  @relation("replies", fields: [id], references: [id])
+}
+
+model Post {
+  id     String @id @default(uuid())
+  userId Int
+
+  slug    String @unique
+  content String @db.VarChar(500)
+
+  reactions Reaction[]
+  authorId  User       @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt() @db.Timestamp()
+}
+
+model Reaction {
+  id     Int    @id @default(autoincrement())
+  postId String
+
+  userId Int
+  type   EReaction
+
+  post Post @relation(fields: [postId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt() @db.Timestamp()
+}

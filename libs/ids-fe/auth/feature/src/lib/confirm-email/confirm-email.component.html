@@ -1,0 +1,56 @@
+<div class="page-container confirm-email-page">
+  <div class="content-section">
+    <div class="confirm-wrapper">
+      <mat-card class="confirm-card">
+        <mat-card-content>
+          @if (!loading) {
+          <div class="status-content">
+            @if (success) {
+            <mat-icon class="status-icon success">check_circle</mat-icon>
+            } @else {
+            <mat-icon class="status-icon error">error</mat-icon>
+            }
+
+            <h1>{{success ? 'Email Confirmed!' : 'Confirmation Failed'}}</h1>
+
+            @if (success) {
+            <p>
+              Your email has been successfully verified. You can now access all features of your
+              account.
+            </p>
+            } @else {
+            <p>{{errorMessage}}</p>
+            }
+
+            <div class="actions">
+              @if (success) {
+              <button mat-raised-button color="primary" routerLink="/login">
+                <mat-icon>login</mat-icon>
+                Go to Login
+              </button>
+              } @else {
+              <button mat-raised-button color="primary" (click)="resendConfirmation()">
+                <mat-icon>email</mat-icon>
+                Resend Confirmation Email
+              </button>
+              }
+            </div>
+          </div>
+          } @else {
+          <div class="loading-content">
+            <mat-spinner></mat-spinner>
+            <p>Confirming your email...</p>
+          </div>
+          }
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="image-section">
+    <div class="brand-overlay">
+      <mat-icon class="large-icon">mark_email_read</mat-icon>
+      <h2>Email Verification</h2>
+      <p>Securing your account</p>
+    </div>
+  </div>
+</div>

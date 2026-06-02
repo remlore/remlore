@@ -6,10 +6,11 @@ declare interface Env {
 
   // url
   readonly REM_APP_NAME: string
-  readonly REM_BASE_URL: string
-  readonly REM_SERVER_API_BASE_URL: string
-  readonly REM_IDS_FE_BASE_URL: string
-  readonly REM_IDS_BASE_URL: string
+  readonly REM_URL: string
+  readonly REM_API_URL: string
+  readonly REM_IDS_FE_URL: string
+  readonly REM_IDS_FE_URL: string
+  readonly REM_IDS_URL: string
 
   [key: string]: any
 }

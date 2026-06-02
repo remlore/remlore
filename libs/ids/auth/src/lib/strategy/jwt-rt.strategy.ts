@@ -14,7 +14,7 @@ export class JwtRtStrategy extends PassportStrategy(Strategy, 'jwt-rt') {
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: cs.get<string>('JWT_REFRESH_SECRET'),
+      secretOrKey: cs.get<string>('JWT_REFRESH_SECRET') as string,
       passReqToCallback: true
     })
   }

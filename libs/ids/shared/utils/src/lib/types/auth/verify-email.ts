@@ -1,7 +1,8 @@
 export interface VerifyEmailCache {
-  token: string
+  email: string
   count: number
-  cooldown: number
+  nextAllowedAt: number
+  pendingEmailVerification?: PendingEmailVerification
 }
 
 export interface VerifyEmailJobData {
@@ -19,4 +20,11 @@ export interface OtpJobData {
   email: string
   otp: string
   ttl: string
+}
+
+export interface PendingEmailVerification {
+  userId: string
+  interactionUid: string
+  expiresAt: Date
+  redirectUrl?: string
 }

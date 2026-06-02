@@ -6,6 +6,7 @@ export interface AppConfig {
   baseURL: string
   apiUrl: string
   idsUrl: string
+  idsFeUrl: string
 }
 
 export const APP_CONFIG = new InjectionToken<AppConfig>('rem-ids-fe.config')

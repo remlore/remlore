@@ -9,8 +9,8 @@ import { Job } from 'bull'
 @Injectable()
 @Processor('send-mail')
 export class SendMailConsumer {
-  private readonly clientOrigin = this.config.get<string>('REM_BASE_URL')
-  private readonly ttlOtp = this.config.get<number>('REM_BASE_URL')
+  private readonly clientOrigin = this.config.get<string>('REM_URL')
+  private readonly ttlOtp = this.config.get<number>('REM_URL')
 
   constructor(
     private readonly config: ConfigService,

@@ -13,7 +13,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
     super({
       clientID: config.get<string>('AUTH20_CLIENT_ID'),
       clientSecret: config.get<string>('AUTH20_CLIENT_SECRET'),
-      callbackURL: `${config.get<string>('REM_SERVER_API_BASE_URL')}/api/v1/auth/redirect`,
+      callbackURL: `${config.get<string>('API_URL')}/api/v1/auth/redirect`,
       scope: ['profile', 'email']
     })
   }

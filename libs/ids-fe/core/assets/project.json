@@ -1,0 +1,9 @@
+{
+  "name": "ids-fe-core-assets",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ids-fe/core/assets/src",
+  "prefix": "rl",
+  "tags": ["type:util", "scope:rem-ids-fe"],
+  "projectType": "library",
+  "targets": {}
+}

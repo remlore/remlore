@@ -1,0 +1,14 @@
+.header-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: transparent;
+  backdrop-filter: blur(2px);
+  box-shadow: #00000026 0 1.95px 0;
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+}

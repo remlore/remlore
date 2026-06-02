@@ -71,7 +71,8 @@
       "options": {
         "ssl": true,
         "sslKey": "apps/rem/rem-key.pem",
-        "sslCert": "apps/rem/cert.pem"
+        "sslCert": "apps/rem/cert.pem",
+        "proxyConfig": "apps/rem-ids-fe/proxy.conf.json"
       },
       "configurations": {
         "production": {

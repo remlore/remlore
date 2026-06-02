@@ -1,0 +1,45 @@
+<div class="card-container" [style.transform]="transform" [style.opacity]="opacity"
+  [class.dragging]="isDragging">
+  <mat-card class="word-card">
+    <img mat-card-image [src]="word.imageUrl" [alt]="word.word" class="word-image">
+
+    <mat-card-content>
+      <h1 class="word-title">{{ word.word }}</h1>
+
+      <p class="word-definition" *ngIf="word.definition">
+        {{ word.definition }}
+      </p>
+
+      <p class="word-example" *ngIf="word.example">
+        <em>"{{ word.example }}"</em>
+      </p>
+
+      <div class="translation-box" *ngIf="showTranslation">
+        <p>{{ translation }}</p>
+      </div>
+
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" (click)="toggleTranslation()"
+          [disabled]="isTranslating">
+          <mat-icon>translate</mat-icon>
+          {{ isTranslating ? 'Đang dịch...' : (showTranslation ? 'Ẩn dịch' : 'Dịch') }}
+        </button>
+
+        <button mat-raised-button (click)="speakWord()">
+          <mat-icon>volume_up</mat-icon>
+          Phát âm
+        </button>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions class="swipe-actions">
+      <button mat-fab color="warn" (click)="onDislike()" class="dislike-btn">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <button mat-fab color="accent" (click)="onLike()" class="like-btn">
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,0 +1,16 @@
+{
+  "name": "ids-oidc",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ids/oidc/src",
+  "projectType": "library",
+  "tags": ["type:feature", "scope:rem-ids"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/ids/oidc/jest.config.cts"
+      }
+    }
+  }
+}

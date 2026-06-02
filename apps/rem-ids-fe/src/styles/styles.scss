@@ -1,0 +1,24 @@
+@use '@angular/material' as mat;
+
+// @include mat.core();
+
+// $my-primary: mat.define-palette(mat.$blue-palette, 700);
+// $my-accent: mat.define-palette(mat.$light-blue-palette, 500);
+// $my-warn: mat.define-palette(mat.$red-palette);
+
+// html {
+//   @include mat.theme((
+//     color: (
+//       primary: $my-primary,
+//       accent: $my-accent,
+//       warn: $my-warn
+//     ),
+//     typography: Roboto,
+//     density: 0
+//   ));
+// }
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}

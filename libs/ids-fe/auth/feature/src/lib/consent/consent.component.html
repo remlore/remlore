@@ -1,16 +1,64 @@
-<div>
-  <h2>Consent Required</h2>
-  <p>
-    The application <strong>{{ client }}</strong> wants to access:
-  </p>
+<div class="page-container consent-page">
+  <div class="content-section">
+    <div class="consent-wrapper">
+      <div class="consent-header">
+        <mat-icon class="app-icon">verified_user</mat-icon>
+        <h1>Authorization Request</h1>
+        <p class="client-name">{{client}} is requesting access to your account</p>
+      </div>
 
-  <ul>
-    <li *ngFor="let scope of scopes">
-      <input [id]="scope" type="checkbox" [checked]="true" disabled />
-      <label [for]="scope">{{ scopeMap[scope] }}</label>
-    </li>
-  </ul>
+      <mat-card class="consent-card">
+        <mat-card-content>
+          <div class="user-info">
+            <mat-icon>account_circle</mat-icon>
+            <div>
+              <p class="user-name">{{client}}</p>
+              <p class="user-email">{{client}}</p>
+            </div>
+          </div>
 
-  <button (click)="confirm()">Allow</button>
-  <a [routerLink]="['/auth/abort', uid]">Deny</a>
+          <mat-divider></mat-divider>
+
+          <div class="scopes-section">
+            <h3>This application will be able to:</h3>
+            <mat-list>
+              @for (scope of scopes; track scope) {
+              <mat-list-item>
+                <mat-checkbox color="primary">
+                  <div class="scope-item">
+                    <span class="scope-name">{{scope}}</span>
+                    <span class="scope-description">{{scopeMap[scope]}}</span>
+                  </div>
+                </mat-checkbox>
+              </mat-list-item>
+              }
+            </mat-list>
+          </div>
+
+          <div class="consent-notice">
+            <mat-icon color="accent">info</mat-icon>
+            <p>You can revoke this access at any time from your account settings</p>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="confirm()" class="allow-btn">
+            <mat-icon>check_circle</mat-icon>
+            Allow Access
+          </button>
+          <button mat-stroked-button (click)="deny()" class="deny-btn">
+            <mat-icon>cancel</mat-icon>
+            Deny
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  <div class="image-section">
+    <div class="brand-overlay">
+      <mat-icon class="large-icon">security</mat-icon>
+      <h2>Secure Authorization</h2>
+      <p>Control what apps can access</p>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,62 @@
+.profile-page {
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  .subtitle {
+    color: #666;
+    margin-bottom: 2rem;
+  }
+
+  .profile-card {
+    mat-card-header {
+      margin-bottom: 2rem;
+    }
+
+    mat-card-content {
+      .avatar-section {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #e0e0e0;
+
+        .avatar {
+          mat-icon {
+            font-size: 120px;
+            width: 120px;
+            height: 120px;
+            color: #1976d2;
+          }
+        }
+
+        button mat-icon {
+          margin-right: 8px;
+        }
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        mat-form-field {
+          width: 100%;
+        }
+
+        .form-actions {
+          display: flex;
+          gap: 1rem;
+          margin-top: 1rem;
+
+          button mat-icon {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+}

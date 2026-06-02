@@ -1,11 +1,14 @@
 import { ExecutionContext, createParamDecorator } from '@nestjs/common'
-import { parse } from 'useragent'
+import { UAParser } from 'ua-parser-js'
 
 export const Useragent = createParamDecorator((_: unknown, ctx: ExecutionContext) => {
   const req = ctx.switchToHttp().getRequest()
 
-  const agent = req.headers['user-agent']
+  const userAgent = req.headers['user-agent']
 
-  console.log('decorator', agent)
-  return parse(agent)
+  if (!userAgent) return
+
+  const parser = new UAParser(userAgent)
+
+  return parser.getResult()
 })

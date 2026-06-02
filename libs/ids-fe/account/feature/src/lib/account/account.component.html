@@ -1,0 +1,42 @@
+<div class="account-container">
+  <mat-toolbar color="primary" class="account-toolbar">
+    <span>My Account</span>
+    <span class="spacer"></span>
+    <button mat-icon-button>
+      <mat-icon>notifications</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav mode="side" opened class="sidenav">
+      <mat-nav-list>
+        <a mat-list-item routerLink="profile" routerLinkActive="active">
+          <mat-icon matListItemIcon>person</mat-icon>
+          <span matListItemTitle>Profile</span>
+        </a>
+        <a mat-list-item routerLink="devices" routerLinkActive="active">
+          <mat-icon matListItemIcon>devices</mat-icon>
+          <span matListItemTitle>Devices & Sessions</span>
+        </a>
+        <a mat-list-item routerLink="linked-accounts" routerLinkActive="active">
+          <mat-icon matListItemIcon>link</mat-icon>
+          <span matListItemTitle>Linked Accounts</span>
+        </a>
+        <mat-divider></mat-divider>
+        <a mat-list-item routerLink="/login">
+          <mat-icon matListItemIcon>logout</mat-icon>
+          <span matListItemTitle>Sign Out</span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

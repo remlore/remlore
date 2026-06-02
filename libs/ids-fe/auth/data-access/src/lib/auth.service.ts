@@ -1,28 +1,54 @@
 import { HttpClient } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
+import { LoginRequest, LoginResponse, RegisterRequest } from '@remlore/ids-fe/auth/utils'
 import { APP_CONFIG } from '@remlore/ids-fe/core/app-config'
-import { ILoginDto } from '@remlore/shared/dto'
+import { LocalStorageService } from '@remlore/ids-fe/core/services'
+import { RlResponse } from '@remlore/shared/util/types'
+import { v4 as uuidv4 } from 'uuid'
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient)
   private readonly appConfig = inject(APP_CONFIG)
+  private readonly localStorageService = inject(LocalStorageService)
 
-  login(dto: ILoginDto, uid: string) {
-    return this.http.post<any>(`${this.appConfig.idsUrl}/interaction/${uid}/login`, dto, {
-      withCredentials: true
-    })
+  login(credentials: LoginRequest, uid: string) {
+    return this.http.post<RlResponse<LoginResponse>>(
+      `${this.appConfig.idsUrl}/interaction/${uid}/login`,
+      credentials,
+      {
+        withCredentials: true
+      }
+    )
   }
 
-  consentDetails(uid: string) {
-    return this.http.get<any>(`${this.appConfig.idsUrl}/interaction/${uid}/consent`, {
-      withCredentials: true
-    })
+  register(credentials: RegisterRequest) {
+    const deviceId = this.getOrCreateDeviceId()
+
+    return this.http.post<RlResponse<boolean>>(
+      `${this.appConfig.idsUrl}/auth/sign-up`,
+      { ...credentials, deviceId },
+      { withCredentials: true }
+    )
   }
 
-  confirm(uid: string) {
-    return this.http.post<any>(`${this.appConfig.idsUrl}/interaction/${uid}/consent`, null, {
-      withCredentials: true
-    })
+  confirmEmail(token: string) {
+    return this.http.post<RlResponse<boolean>>(
+      `${this.appConfig.idsUrl}/auth/verify-sign-up-email`,
+      { token },
+      { withCredentials: true }
+    )
+  }
+
+  private getOrCreateDeviceId() {
+    let deviceId = this.localStorageService.get<string>('deviceId')
+
+    if (!deviceId) {
+      deviceId = uuidv4()
+
+      this.localStorageService.set('deviceId', deviceId)
+    }
+
+    return deviceId
   }
 }

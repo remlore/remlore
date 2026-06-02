@@ -1,18 +1,13 @@
-const { FlatCompat } = require('@eslint/eslintrc')
-const js = require('@eslint/js')
-const nrwlEslintPluginNx = require('@nrwl/eslint-plugin-nx')
+import nx from '@nx/eslint-plugin';
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended
-})
-
-module.exports = [
-  { plugins: { '@nrwl/nx': nrwlEslintPluginNx } },
+export default [
+  ...nx.configs['flat/base'],
+  ...nx.configs['flat/typescript'],
+  ...nx.configs['flat/javascript'],
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     rules: {
-      '@nrwl/nx/enforce-module-boundaries': [
+      '@nx/enforce-module-boundaries': [
         'error',
         {
           enforceBuildableLibDependency: true,
@@ -38,6 +33,18 @@ module.exports = [
               bannedExternalImports: ['@angular/*'],
               onlyDependOnLibsWithTags: ['scope:rem-ids', 'scope:rem'],
               notDependOnLibsWithTags: ['scope:rem-api', 'scope:rem-web', 'scope:rem-ids-fe']
+            },
+            {
+              sourceTag: 'scope:rem-words',
+              bannedExternalImports: ['@nestjs/*'],
+              onlyDependOnLibsWithTags: ['scope:rem-words', 'scope:rem'],
+              notDependOnLibsWithTags: ['scope:rem-api', 'scope:rem-web', 'scope:ids', 'scope:rem-words-api']
+            },
+            {
+              sourceTag: 'scope:rem-words-api',
+              bannedExternalImports: ['@angular/*'],
+              onlyDependOnLibsWithTags: ['scope:rem-words-api', 'scope:rem'],
+              notDependOnLibsWithTags: ['scope:rem-api', 'scope:rem-web', 'scope:rem-ids-fe', 'scope:rem-words']
             },
             {
               sourceTag: 'scope:rem-api',
@@ -70,26 +77,5 @@ module.exports = [
       ],
     }
   },
-  ...compat.config({ extends: ['plugin:@nrwl/nx/typescript'] }).map((config) => ({
-    ...config,
-    files: ['**/*.ts', '**/*.tsx'],
-    rules: {
-      ...config.rules
-    }
-  })),
-  ...compat.config({ extends: ['plugin:@nrwl/nx/javascript'] }).map((config) => ({
-    ...config,
-    files: ['**/*.js', '**/*.jsx'],
-    rules: {
-      ...config.rules
-    }
-  })),
-  ...compat.config({ env: { jest: true } }).map((config) => ({
-    ...config,
-    files: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.spec.js', '**/*.spec.jsx'],
-    rules: {
-      ...config.rules
-    }
-  })),
-  { ignores: ['node_modules\r'] }
+  { ignores: ['node_modules\r', '**/dist'] }
 ]

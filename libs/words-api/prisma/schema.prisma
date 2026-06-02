@@ -1,0 +1,126 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "./src/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Lang {
+  EN
+  VI
+}
+
+enum LearningStatus {
+  LIKED
+  DISLIKED
+  LEARNING
+}
+
+model User {
+  id          String  @id @default(cuid())
+  sub         String  @unique @db.VarChar(100)
+  email       String  @unique @db.VarChar(255)
+  photoUrl    String? @db.VarChar(500)
+  displayName String? @db.VarChar(100)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  settings UserSettings?
+
+  libraries    Library[]
+  vocabularies UserStudyWord[]
+
+  @@map("users") // Best Practice: Tables are lowercase plural in DB
+}
+
+model UserSettings {
+  userId         String @id
+  dailyWordLimit Int    @default(10)
+  nativeLanguage Lang   @default(VI)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Library {
+  id          String  @id @default(cuid())
+  name        String  @db.VarChar(100)
+  description String? @db.VarChar(1000)
+  isPublic    Boolean @default(false)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  words     WordLibrary[]
+
+  @@index([userId])
+  @@map("libraries")
+}
+
+model WordLibrary {
+  wordId String
+  word   Word   @relation(fields: [wordId], references: [id])
+
+  libraryId String
+  library   Library @relation(fields: [libraryId], references: [id])
+
+  // This composite key ensures a word can only be added to a specific library once
+  @@id([wordId, libraryId])
+  @@map("wordLibraries")
+}
+
+model Word {
+  id         String @id @default(cuid())
+  word       String @unique
+  definition String
+
+  // Optional content
+  translation     String?
+  exampleSentence String?
+  pronunciation   String?
+  audioUrl        String?
+  imageUrl        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Hierarchy
+  library WordLibrary[]
+
+  userLearners UserStudyWord[]
+
+  @@index([id, word])
+  @@map("vocabularies")
+}
+
+model UserStudyWord {
+  id String @id @default(cuid())
+
+  // 1. The word being studied
+  wordId     String @unique
+  vocabulary Word   @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  // 2. Who is studying it (We need the User here!)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 3. Status/Metrics
+  status       LearningStatus @default(LEARNING) // Leitner box (0 = New, 5 = Mastered)
+  dueDate      DateTime       @default(now()) // When to review next
+  totalReviews Int            @default(0)
+  lastReviewed DateTime?
+
+  @@unique([wordId, userId]) // Crucial: A user only has one progress entry per word
+  @@index([userId, dueDate]) // Essential for fetching "Today's Words"
+  @@map("userStudyWords")
+}

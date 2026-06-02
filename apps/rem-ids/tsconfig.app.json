@@ -1,12 +1,21 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
+    "outDir": "../../dist/apps/rem-ids", // Match your webpack output path
+    "sourceMap": true, // Explicitly ensure source maps are on
+    "module": "preserve", // Better compatibility for Node debugging
     "types": ["node"],
     "emitDecoratorMetadata": true,
-    "target": "es2021"
+    "declaration": true,
+    "target": "es2021",
+    "sourceRoot": "/"
   },
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
-  "include": ["src/**/*.ts"]
+  "exclude": [
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts",
+    "../../libs/**/*.spec.ts",
+    "../../libs/**/*.test.ts"
+  ],
+  "include": ["src/**/*.ts", "../../libs/ids/**/*.ts"]
 }

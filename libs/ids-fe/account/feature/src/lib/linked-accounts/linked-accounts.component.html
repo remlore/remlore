@@ -1,0 +1,63 @@
+<div class="linked-accounts-page">
+  <h1>Linked Accounts</h1>
+  <p class="subtitle">Connect your social accounts for easy sign-in</p>
+
+  <mat-card class="accounts-card">
+    <mat-card-header>
+      <mat-card-title>Social Connections</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="accounts-list">
+        @for (account of accounts; track $index) {
+        <div class="account-item">
+          <div class="account-icon" [class]="account.provider">
+            <mat-icon [svgIcon]="account.provider"></mat-icon>
+          </div>
+          <div class="account-info">
+            <h3>{{getProviderName(account.provider)}}</h3>
+            @if(account.connected) {
+            <p>Connected as {{account.email}}</p>
+            <p class="link-date">
+              Linked on {{account.linkedDate | date:'mediumDate'}}
+            </p>
+            } @else {
+            <p class="not-connected">
+              Not connected
+            </p>
+            }
+          </div>
+          <div class="account-status">
+            @if (account.connected) {
+            <mat-chip class="connected-chip">Connected</mat-chip>
+            }
+          </div>
+          <div class="account-actions">
+            @if (account.connected) {
+            <button mat-raised-button color="primary" (click)="connectAccount(account.provider)">
+              Connect
+            </button>
+            }
+            @if (account.connected) {
+            <button mat-stroked-button color="warn" (click)="disconnectAccount(account.provider)">
+              Disconnect
+            </button>
+            }
+          </div>
+        </div>
+        }
+      </div>
+
+      <div class="info-box">
+        <mat-icon>info</mat-icon>
+        <div>
+          <h4>About Linked Accounts</h4>
+          <p>
+            Linking your social accounts allows you to sign in quickly without entering your
+            password.
+            You can link multiple accounts and disconnect them at any time.
+          </p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
